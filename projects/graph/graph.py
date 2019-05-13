@@ -87,23 +87,35 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
+        # create empty queue holding paths this time
         q = Queue()
+        # empty set for visited vertexes
         visited = set()
 
+        # enqueue a list representing path to starting_vertex which is just itself
         q.enqueue([starting_vertex])
 
+        # while the queue isn't empty
         while q.size() > 0:
+          # dequeue path
           v = q.dequeue()
+          # node is the last vertex in path
           node = v[-1]
 
+          # if we haven't visited node yet
           if node not in visited:
+            # loop through neighbors
             for neighbor in self.vertices[node]:
+              # add neighbor to path
               path = list(v)
               path.append(neighbor)
+              # enqueue the path for more searching
               q.enqueue(path)
+              # if neighbor is goal, return the path
               if neighbor == destination_vertex:
                 return path
             
+            # add vertex to visited after we've searched it
             visited.add(node)
 
     def dfs(self, starting_vertex, destination_vertex):
@@ -112,7 +124,37 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        # create empty stack holding paths this time
+        s = Stack()
+        # empty set for visited vertexes
+        visited = set()
+
+        # enqueue a list representing path to starting_vertex which is just itself
+        s.push([starting_vertex])
+
+        # while the queue isn't empty
+        while s.size() > 0:
+          # dequeue path
+          v = s.pop()
+          # node is the last vertex in path
+          node = v[-1]
+
+          # if we haven't visited node yet
+          if node not in visited:
+            # loop through neighbors
+            for neighbor in self.vertices[node]:
+              # add neighbor to path
+              path = list(v)
+              path.append(neighbor)
+              # enqueue the path for more searching
+              s.push(path)
+              # if neighbor is goal, return the path
+              if neighbor == destination_vertex:
+                return path
+            
+            # add vertex to visited after we've searched it
+            visited.add(node)
+        
 
 
 
@@ -195,4 +237,5 @@ if __name__ == '__main__':
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    # print(graph.dfs(1, 6))
+    print('\ndfs')
+    print(graph.dfs(1, 6))
