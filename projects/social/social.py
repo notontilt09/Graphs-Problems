@@ -1,4 +1,5 @@
-
+import random
+from util import Queue
 
 class User:
     def __init__(self, name):
@@ -45,10 +46,24 @@ class SocialGraph:
         self.users = {}
         self.friendships = {}
         # !!!! IMPLEMENT ME
-
+        
         # Add users
+        for i in range(numUsers):
+            self.addUser(f'User {i+1}')
 
         # Create friendships
+        # avgFriendships = totalFriendships / numUsers
+        # totalFriendships = avgFriendships * numUsers
+        possibleFriendships = []
+        for userID in self.users:
+            for friendID in range(userID + 1, self.lastID + 1):
+                possibleFriendships.append((userID, friendID))
+
+        random.shuffle(possibleFriendships)
+
+        for friendship_index in range(avgFriendships * numUsers // 2):
+            friendship = possibleFriendships[friendship_index]
+            self.addFriendship(friendship[0], friendship[1])
 
     def getAllSocialPaths(self, userID):
         """
@@ -61,6 +76,60 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        # use BFT to find all connected components of the userId
+        q = Queue()
+        # Create an empty Visited set
+        connected = set()
+        # Add the starting vertex to the queue
+        q.enqueue(userID)
+        # While the queue is not empty...
+        while q.size() > 0:
+          # Dequeue the first vertex
+          v = q.dequeue()
+          # If it has not been visited...
+          if v not in connected:
+            # Mark it as visited (print it and add it to the visited set)
+            connected.add(v)
+            # Then enqueue each of its neighbors in the queue
+            for neighbor in self.friendships[v]:
+              q.enqueue(neighbor)
+
+        # use BFS to find shortest path to each component
+
+
+        for user in connected:
+          q = Queue()
+        # empty set for seen vertexes
+          seen = set()
+
+        # enqueue a list representing path to useID which is just itself
+          q.enqueue([userID])
+
+        # while the queue isn't empty
+          while q.size() > 0:
+            # dequeue path
+            v = q.dequeue()
+            # node is the last vertex in path
+            node = v[-1]
+
+            # if we haven't visited node yet
+            if node not in seen:
+              # if the node is the destination
+              if node == user:
+                # add the key value pair to the visited dictionary
+                visited[user] = v
+              # loop through neighbors
+              for neighbor in self.friendships[node]:
+                # add neighbor to path
+                path = list(v)
+                path.append(neighbor)
+              # enqueue the path for more searching
+                q.enqueue(path)
+            
+            # add vertex to visited after we've searched it
+              seen.add(node)
+
         return visited
 
 
