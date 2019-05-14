@@ -95,6 +95,7 @@ class SocialGraph:
             for neighbor in self.friendships[v]:
               q.enqueue(neighbor)
 
+        print(f'\n{len(connected)} in {userID}\'s network\n\n', connected)
         # use BFS to find shortest path to each component
 
 
@@ -135,7 +136,17 @@ class SocialGraph:
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populateGraph(10, 2)
+    sg.populateGraph(1000, 5)
     print(sg.friendships)
     connections = sg.getAllSocialPaths(1)
     print(connections)
+    print('\n')
+    total = 0
+    for key in connections:
+      total += len(connections[key]) - 1
+    avg_separation = total / len(sg.users)
+    print(avg_separation)
+
+
+
+
