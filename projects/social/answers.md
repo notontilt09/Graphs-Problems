@@ -15,4 +15,4 @@ avg_separation = total / len(sg.users)
 print(avg_separation)
 ```
 
-Running this a few times gave an average separation of a bout 4.3 degrees.  Not quite Kevin Bacon Theorem.
+Running this a few times gave an average separation of about 4.5 degrees.  Not quite Kevin Bacon Theorem.
