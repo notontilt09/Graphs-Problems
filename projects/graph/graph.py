@@ -11,7 +11,8 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex] = set()
+        if vertex not in self.vertices:
+          self.vertices[vertex] = set()
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
@@ -43,6 +44,7 @@ class Graph:
             # Then enqueue each of its neighbors in the queue
             for neighbor in self.vertices[v]:
               q.enqueue(neighbor)
+
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -66,6 +68,7 @@ class Graph:
             # Then push each of its neighbors onto the Stack
             for neighbor in self.vertices[v]:
               s.push(neighbor)
+
     def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
@@ -213,7 +216,7 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 5, 6
     '''
     print('\nbft')
-    graph.bft(1)
+    graph.bft(3)
 
     '''
     Valid DFT recursive paths:
